@@ -3,9 +3,9 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 develop_database = "sqlite:///" + basedir \
-                              + "/api/dev_db.sqlite"
+                              + "crud_db.sqlite"
 test_database = "sqlite:///" + basedir \
-                              + "/test/test_db.sqlite"
+                              + "test_db.sqlite"
 
 class BaseConfig:
     """Base configuration"""
@@ -16,11 +16,11 @@ class BaseConfig:
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
     DEBUG = True
-    DEVELOP_DATABASE = develop_database
+    SQLALCHEMY_DATABASE_URI = develop_database
 
 
 class TestingConfig(BaseConfig):
     """Testing configuration"""
     DEBUG = True
     TESTING = True
-    TESTING_DATABASE = test_database
+    SQLALCHEMY_DATABASE_URI = test_database
