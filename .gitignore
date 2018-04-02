@@ -4,3 +4,5 @@ __pycache__
 migrations
 tmp
 .vscode
+apicrud_db.sqlite
+apitest_db.sqlite
