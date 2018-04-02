@@ -1,4 +1,9 @@
 from flask import Flask, request, jsonify
+import os
+import unittest
+import coverage
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 from api import db, app
 from api.models.user import user_schema, users_schema, User
 from flask_restful import Api
@@ -6,15 +11,11 @@ from api.resource.user_resource import LoginResource, RegisterResource
 from api.resource.book_resource import BookResource, BookDetailsResource
 
 api = Api(app)
+migrate = Migrate(app, db)
+manager = Manager(app)
 
-import os
-import unittest
-import coverage
-
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
-
-# import pdb;pdb.set_trace()
+# migrations
+manager.add_command('db', MigrateCommand)
 
 COV = coverage.coverage(
     branch=True,
@@ -26,14 +27,6 @@ COV = coverage.coverage(
     ]
 )
 COV.start()
-
-from api import app, db
-
-migrate = Migrate(app, db)
-manager = Manager(app)
-
-# migrations
-manager.add_command('db', MigrateCommand)
 
 
 @manager.command
