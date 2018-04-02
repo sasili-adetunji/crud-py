@@ -34,7 +34,6 @@ class RegisterResource(Resource):
                     'message': 'Successfully registered. Login with your email',
                 }
             except Exception as e:
-                print(e)
                 return {
                     'status': 'fail',
                     'message': 'Try again'
@@ -69,26 +68,3 @@ class LoginResource(Resource):
                 'status': 'fail',
                 'message': 'Try again'
             }
-class UserDetailResource(Resource):
-
-    def get(self, id):
-        user = User.query.get(id)
-        return user_schema.jsonify(user)
-
-    def put(self, id):
-        user = User.query.get(id)
-        username = request.json['username']
-        email = request.json['email']
-
-        user.email = email
-        user.username = username
-
-        db.session.commit()
-        return user_schema.jsonify(user)
-
-    def delete(self, id):
-        user = User.query.get(id)
-        db.session.delete(user)
-        db.session.commit()
-
-        return user_schema.jsonify(user)
